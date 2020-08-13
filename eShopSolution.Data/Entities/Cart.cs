@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eShopSolution.Data.EF;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,6 +14,7 @@ namespace eShopSolution.Data.Entities
         public Guid user_id { get; set; }
         public Product Product { get; set; }
         public DateTime date_created { get; set; }
+        public AppUser AppUser { get; set; }
 
     }
 }
