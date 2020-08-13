@@ -6,7 +6,7 @@ namespace eShopSolution.Data.Entities
 {
     public class Language
     {
-        public int id { set; get; }
+        public string id { set; get; }
         public string name { set; get; }
         public bool is_default { set; get; }
         public List<CategoryTranslation> CategoryTranslations { get; set; }
