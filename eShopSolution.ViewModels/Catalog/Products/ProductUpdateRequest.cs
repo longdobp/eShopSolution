@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace eShopSolution.Application.Catalog.Products.Dtos.Manage
+namespace eShopSolution.ViewModels.Catalog.Products
 {
     public class ProductUpdateRequest
     {
@@ -14,5 +15,6 @@ namespace eShopSolution.Application.Catalog.Products.Dtos.Manage
         public string seo_description { set; get; }
         public string seo_title { set; get; }
         public string seo_alias { set; get; }
+        public IFormFile thumbnail_image { get; set; }
     }
 }
