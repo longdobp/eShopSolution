@@ -10,6 +10,9 @@ namespace eShopSolution.Data.Entities
         public int product_id { set; get; }
         public int quantity { set; get; }
         public decimal price { set; get; }
+        public Guid user_id { get; set; }
+        public Product Product { get; set; }
+        public DateTime date_created { get; set; }
 
     }
 }
