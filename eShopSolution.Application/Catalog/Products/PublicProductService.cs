@@ -18,35 +18,75 @@ namespace eShopSolution.Application.Catalog.Products
             _context = context;
         }
 
-        public async Task<List<ProductViewModel>> GetAll()
+        //public async Task<List<ProductViewModel>> GetAll()
+        //{
+        //    var query = from p in _context.Products
+        //                join pt in _context.ProductTransactions on p.id equals pt.product_id
+        //                join pic in _context.ProductInCategories on p.id equals pic.product_id
+        //                join c in _context.Categories on pic.category_id equals c.id
+        //                select new { p, pt, pic };
+
+        //    var data = await query.Select(x => new ProductViewModel()
+        //    {
+        //        Id = x.p.id,
+        //        Name = x.pt.name,
+        //        DateCreated = x.p.date_created,
+        //        Description = x.pt.description,
+        //        Details = x.pt.details,
+        //        LanguageId = x.pt.languege_id,
+        //        OriginalPrice = x.p.original_price,
+        //        Price = x.p.price,
+        //        SeoAlias = x.pt.seo_alias,
+        //        SeoDescription = x.pt.seo_description,
+        //        SeoTitle = x.pt.seo_title,
+        //        Stock = x.p.stock,
+        //        ViewCount = x.p.view_count
+        //    }).ToListAsync();
+        //    return data;
+
+        //}
+
+        public async Task<PagedResult<ProductViewModel>> GetAll(string languageId, GetPublicProductPagingRequest request)
         {
             var query = from p in _context.Products
                         join pt in _context.ProductTransactions on p.id equals pt.product_id
                         join pic in _context.ProductInCategories on p.id equals pic.product_id
                         join c in _context.Categories on pic.category_id equals c.id
                         select new { p, pt, pic };
-
-            var data = await query.Select(x => new ProductViewModel()
+            if (languageId != null)
             {
-                Id = x.p.id,
-                Name = x.pt.name,
-                DateCreated = x.p.date_created,
-                Description = x.pt.description,
-                Details = x.pt.details,
-                LanguageId = x.pt.languege_id,
-                OriginalPrice = x.p.original_price,
-                Price = x.p.price,
-                SeoAlias = x.pt.seo_alias,
-                SeoDescription = x.pt.seo_description,
-                SeoTitle = x.pt.seo_title,
-                Stock = x.p.stock,
-                ViewCount = x.p.view_count
-            }).ToListAsync();
-            return data;
+                query = query.Where(p => p.pt.languege_id == languageId);
+            }
 
+            int totalRow = await query.CountAsync();
+
+            var data = await query.Skip((request.PageIndex - 1) * request.Pagesize)
+                .Take(request.Pagesize)
+                .Select(x => new ProductViewModel()
+                {
+                    Id = x.p.id,
+                    Name = x.pt.name,
+                    DateCreated = x.p.date_created,
+                    Description = x.pt.description,
+                    Details = x.pt.details,
+                    LanguageId = x.pt.languege_id,
+                    OriginalPrice = x.p.original_price,
+                    Price = x.p.price,
+                    SeoAlias = x.pt.seo_alias,
+                    SeoDescription = x.pt.seo_description,
+                    SeoTitle = x.pt.seo_title,
+                    Stock = x.p.stock,
+                    ViewCount = x.p.view_count
+                }).ToListAsync();
+            var pagedResult = new PagedResult<ProductViewModel>()
+            {
+                TotalRecord = totalRow,
+                Items = data
+            };
+            return pagedResult;
         }
 
-        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request)
+        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId ,GetPublicProductPagingRequest request)
         {
             //1. Select join
             var query = from p in _context.Products
@@ -57,7 +97,7 @@ namespace eShopSolution.Application.Catalog.Products
             //2. filter
             if (request.CategoryId.HasValue && request.CategoryId.Value > 0)
             {
-                query = query.Where(p => p.pic.category_id == request.CategoryId);
+                query = query.Where(p => p.pic.category_id == request.CategoryId && p.pt.languege_id == languageId);
             }
             //3. Paging
             int totalRow = await query.CountAsync();

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace eShopSolution.ViewModels.Catalog.Products
+namespace eShopSolution.ViewModels.Catalog.ProductImages
 {
     public class ProductImageViewModel
     {
@@ -13,5 +11,6 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public bool IsDefault { get; set; }
 
         public long FileSize { get; set; }
+        public IFormFile ImageFile { get; set; }
     }
 }
