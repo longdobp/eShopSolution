@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using eShopSolution.Utilities.Constants;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
+
 using System.IO;
-using System.Text;
 
 namespace eShopSolution.Data.EF
 {
-    class EShopDbContextFactory : IDesignTimeDbContextFactory<EShopDbContext>
+    internal class EShopDbContextFactory : IDesignTimeDbContextFactory<EShopDbContext>
     {
         public EShopDbContext CreateDbContext(string[] args)
         {
@@ -17,7 +16,8 @@ namespace eShopSolution.Data.EF
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var connectionString = configuration.GetConnectionString("eShopSolutionDb");
+            //var connectionString = configuration.GetConnectionString("eShopSolutionDb");
+            var connectionString = configuration.GetConnectionString(SystemConstants.LocalConnectionString);
 
             var optionBuilder = new DbContextOptionsBuilder<EShopDbContext>();
             optionBuilder.UseSqlServer(connectionString);

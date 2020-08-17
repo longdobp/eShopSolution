@@ -1,4 +1,5 @@
 ﻿using eShopSolution.Application.Catalog.Products;
+using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace eShopSolution.BackendApi.Controllers
     {
         private readonly IPublicProductService _publicProductService;
         private readonly IManageProductService _manageProductService;
+
         public productsController(IPublicProductService publicProductService, IManageProductService manageProductService)
         {
             _publicProductService = publicProductService;
@@ -88,6 +90,59 @@ namespace eShopSolution.BackendApi.Controllers
                 return Ok();
 
             return BadRequest();
+        }
+
+        //Images
+        [HttpPost("{productId}/images")]
+        public async Task<IActionResult> CreateImage(int productId, [FromForm] ProductImageCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var imageId = await _manageProductService.AddImage(productId, request);
+            if (imageId == 0)
+                return BadRequest();
+
+            var image = await _manageProductService.GetImageById(imageId);
+
+            return CreatedAtAction(nameof(GetImageById), new { id = imageId }, image);
+        }
+
+        [HttpPut("{productId}/images/{imageId}")]
+        public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
+        {
+            var isSuccessful = await _manageProductService.UpdateImage(imageId, request);
+            if (isSuccessful == 0)
+                return BadRequest();
+            return Ok();
+        }
+
+        [HttpDelete("{productId}/images/{imageId}")]
+        public async Task<IActionResult> RemoveImage(int imageId)
+        {
+            var affectedResult = await _manageProductService.RemoveImage(imageId);
+            if (affectedResult == 0)
+                return BadRequest();
+
+            return Ok();
+        }
+
+        [HttpGet("{productId}/images/{imageId}")]
+        public async Task<IActionResult> GetImageById(int productId, int imageId)
+        {
+            var image = await _manageProductService.GetImageById(imageId);
+            if (image == null)
+                return BadRequest("Connot find image");
+
+            return Ok(image);
+        }
+
+        [HttpGet("{productId}/images")]
+        public async Task<IActionResult> GetListImageByProductId(int productId)
+        {
+            var images = await _manageProductService.GetListImages(productId);
+            return Ok(images);
         }
     }
 }
