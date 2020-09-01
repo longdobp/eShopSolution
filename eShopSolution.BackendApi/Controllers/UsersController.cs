@@ -20,7 +20,7 @@ namespace eShopSolution.BackendApi.Controllers
 
         [HttpPost("authemticate")]
         [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
+        public async Task<IActionResult> Authenticate([FromForm] LoginRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -35,7 +35,7 @@ namespace eShopSolution.BackendApi.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        public async Task<IActionResult> Register([FromForm] RegisterRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
