@@ -17,7 +17,7 @@ namespace eShopSolution.Data.EF
                 .Build();
 
             //var connectionString = configuration.GetConnectionString("eShopSolutionDb");
-            var connectionString = configuration.GetConnectionString(SystemConstants.LocalConnectionString);
+            var connectionString = configuration.GetConnectionString(SystemConstants.MainConnectionString);
 
             var optionBuilder = new DbContextOptionsBuilder<EShopDbContext>();
             optionBuilder.UseSqlServer(connectionString);
