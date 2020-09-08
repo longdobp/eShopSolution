@@ -1,9 +1,13 @@
-﻿using eShopSolution.ViewModels.System.Users;
+﻿using eShopSolution.AdminApp.Models;
+using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.System.Users;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,10 +16,12 @@ namespace eShopSolution.AdminApp.Service
     public class UserApiClient : IUserApiClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
 
-        public UserApiClient(IHttpClientFactory httpClientFactory)
+        public UserApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
         public async Task<string> Authenticate(LoginRequest request)
@@ -24,10 +30,23 @@ namespace eShopSolution.AdminApp.Service
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var response = await client.PostAsync("/api/users/authenticate", httpContent);
             var token = await response.Content.ReadAsStringAsync();
+            //var token = JsonConvert.DeserializeObject<TokenViewModel>(body).Token;
             return token;
+        }
+
+        public async Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", request.BearerToken);
+            var response = await client.GetAsync($"/api/users/paging?PageIndex=" +
+                $"{request.PageIndex}&Pagesize={request.Pagesize}&keywork={request.keywork}");
+            var body = await response.Content.ReadAsStringAsync();
+            var users = JsonConvert.DeserializeObject<PagedResult<UserViewModel>>(body);
+            return users;
         }
     }
 }

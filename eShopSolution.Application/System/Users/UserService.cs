@@ -1,10 +1,13 @@
 ﻿using eShopSolution.Data.EF;
+using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +57,35 @@ namespace eShopSolution.Application.System.Users
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public async Task<PagedResult<UserViewModel>> GetUserPaging(GetUserPagingRequest request)
+        {
+            var query = _userManager.Users;
+            if (!string.IsNullOrEmpty(request.keywork))
+            {
+                query = query.Where(x => x.UserName.Contains(request.keywork) || x.PhoneNumber.Contains(request.keywork));
+            }
+
+            int totalRow = await query.CountAsync();
+
+            var data = await query.Skip((request.PageIndex - 1) * request.Pagesize)
+                .Take(request.Pagesize)
+                .Select(x => new UserViewModel()
+                {
+                    Id = x.Id,
+                    FirstName = x.first_name,
+                    LastName = x.last_name,
+                    PhoneNumber = x.PhoneNumber,
+                    UserName = x.UserName,
+                    Email = x.Email
+                }).ToListAsync();
+            var pagedResult = new PagedResult<UserViewModel>()
+            {
+                TotalRecord = totalRow,
+                Items = data
+            };
+            return pagedResult;
         }
 
         public async Task<bool> Register(RegisterRequest request)

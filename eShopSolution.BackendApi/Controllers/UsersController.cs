@@ -1,6 +1,7 @@
 ﻿using eShopSolution.Application.System.Users;
 using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -33,7 +34,7 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok(new { token = resultToken });
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
@@ -46,6 +47,14 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest("Register is unsuccessful.");
             }
             return Ok();
+        }
+
+        [HttpGet("Paging")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetListUserPaging([FromQuery] GetUserPagingRequest request)
+        {
+            var users = await _userService.GetUserPaging(request);
+            return Ok(users);
         }
     }
 }
