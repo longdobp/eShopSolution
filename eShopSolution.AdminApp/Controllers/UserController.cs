@@ -1,4 +1,5 @@
-﻿using eShopSolution.AdminApp.Service;
+﻿using eShopSolution.AdminApp.Models;
+using eShopSolution.AdminApp.Service;
 using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -31,8 +33,9 @@ namespace eShopSolution.AdminApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
 
@@ -44,11 +47,13 @@ namespace eShopSolution.AdminApp.Controllers
 
             var token = await _userApiClient.Authenticate(request);
 
-            var userPrincipal = this.ValidateToken(token);
+            string result = JsonConvert.DeserializeObject<TokenViewModel>(token).Token;
+
+            var userPrincipal = this.ValidateToken(result);
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
-                IsPersistent = false
+                IsPersistent = true
             };
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
