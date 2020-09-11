@@ -47,9 +47,10 @@ namespace eShopSolution.AdminApp.Controllers
                 return View();
 
             var result = await _userApiClient.RegisterUser(request);
-            if (result)
+            if (result.IsSuccessed)
                 return RedirectToAction("Index");
 
+            ModelState.AddModelError("", result.Message);
             return View(request);
         }
 
