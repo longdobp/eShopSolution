@@ -50,7 +50,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpGet("Paging")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<IActionResult> GetListUserPaging([FromQuery] GetUserPagingRequest request)
         {
             var users = await _userService.GetUserPaging(request);

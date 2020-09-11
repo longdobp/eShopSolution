@@ -10,7 +10,7 @@ namespace eShopSolution.ViewModels.System.Users
     {
         public RegisterRequestValidator()
         {
-            RuleFor(x => x.FistName).NotEmpty().WithMessage("First name is required")
+            RuleFor(x => x.FirstName).NotEmpty().WithMessage("First name is required")
                 .MaximumLength(200).WithMessage("First name can not over 200 characters");
 
             RuleFor(x => x.LastName).NotEmpty().WithMessage("Last name is required")

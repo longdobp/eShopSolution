@@ -94,7 +94,7 @@ namespace eShopSolution.Application.System.Users
             {
                 date_of_birth = request.DoB,
                 Email = request.Email,
-                first_name = request.FistName,
+                first_name = request.FirstName,
                 last_name = request.LastName,
                 UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber

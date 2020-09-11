@@ -16,15 +16,13 @@
         </ol>
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-table mr-1"></i>
-                Danh Sách User
+                <a class="btn btn-success text-right" asp-action="create" asp-controller="user">Create User</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Tên</th>
                                 <th>Họ</th>
                                 <th>Điện thoại</th>
@@ -33,24 +31,10 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>ID</th>
-                                <th>Tên</th>
-                                <th>Họ</th>
-                                <th>Điện thoại</th>
-                                <th>UserName</th>
-                                <th>Email</th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
                         <tbody>
                             @foreach (var item in Model.Items)
                             {
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Id)
-                                    </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.FirstName)
                                     </td>
