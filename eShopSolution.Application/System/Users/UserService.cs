@@ -59,6 +59,19 @@ namespace eShopSolution.Application.System.Users
             return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
         }
 
+        public async Task<ApiResult<bool>> Delete(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>("User không tồn tại.");
+            }
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+                return new ApiSuccessResult<bool>();
+            return new ApiErrorResult<bool>("Xóa không thành công.");
+        }
+
         public async Task<ApiResult<UserViewModel>> GetById(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -79,12 +92,12 @@ namespace eShopSolution.Application.System.Users
             return new ApiSuccessResult<UserViewModel>(uservm);
         }
 
-        public async Task<PagedResult<UserViewModel>> GetUserPaging(GetUserPagingRequest request)
+        public async Task<ApiResult<PagedResult<UserViewModel>>> GetUserPaging(GetUserPagingRequest request)
         {
             var query = _userManager.Users;
-            if (!string.IsNullOrEmpty(request.keywork))
+            if (!string.IsNullOrEmpty(request.Keyword))
             {
-                query = query.Where(x => x.UserName.Contains(request.keywork) || x.PhoneNumber.Contains(request.keywork));
+                query = query.Where(x => x.UserName.Contains(request.Keyword) || x.PhoneNumber.Contains(request.Keyword));
             }
 
             int totalRow = await query.CountAsync();
@@ -98,14 +111,17 @@ namespace eShopSolution.Application.System.Users
                     LastName = x.last_name,
                     PhoneNumber = x.PhoneNumber,
                     UserName = x.UserName,
-                    Email = x.Email
+                    Email = x.Email,
+                    Dob = x.date_of_birth
                 }).ToListAsync();
             var pagedResult = new PagedResult<UserViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.PageIndex,
+                Pagesize = request.Pagesize,
                 Items = data
             };
-            return pagedResult;
+            return new ApiSuccessResult<PagedResult<UserViewModel>>(pagedResult);
         }
 
         public async Task<ApiResult<bool>> Register(RegisterRequest request)
