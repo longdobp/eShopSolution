@@ -6,6 +6,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
 
 <main>
     <div class="container-fluid">
@@ -18,8 +25,8 @@
             <div class="card-header">
                 <div class="row">
                     @*<div class="col-md-6 col-xl-12">
-                        <a class="btn btn-success text-right" asp-action="create" asp-controller="user">Create User</a>
-                    </div>*@
+                            <a class="btn btn-success text-right" asp-action="create" asp-controller="user">Create User</a>
+                        </div>*@
                     <div class="col-md-6 col-xl-12">
                         <form asp-action="Index" method="get">
                             <div class="row">
@@ -37,6 +44,14 @@
                 </div>
             </div>
             <div class="card-body">
+                <div class="row">
+                    @if (ViewBag.SuccessMsg != null)
+                    {
+                        <div id="msgAlert" class="alert alert-success" role="alert">
+                            @ViewBag.SuccessMsg
+                        </div>
+                    }
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
