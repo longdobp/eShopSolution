@@ -130,10 +130,10 @@ namespace eShopSolution.Application.Catalog.Products
                         join c in _context.Categories on pic.category_id equals c.id
                         select new { p, pt, pic };
             //2. filter
-            if (!string.IsNullOrEmpty(request.Keywork))
-                query = query.Where(x => x.pt.name.Contains(request.Keywork));
+            if (!string.IsNullOrEmpty(request.Keyword))
+                query = query.Where(x => x.pt.name.Contains(request.Keyword));
 
-            if (request.CategoryIds.Count > 0)
+            if (request.CategoryIds != null && request.CategoryIds.Count > 0)
             {
                 query = query.Where(p => request.CategoryIds.Contains(p.pic.category_id));
             }

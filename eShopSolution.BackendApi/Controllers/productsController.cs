@@ -19,6 +19,14 @@ namespace eShopSolution.BackendApi.Controllers
             _productService = productService;
         }
 
+        // https://localhost:port/api/products/paging?PageIndex=1&Pagesize=1
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
+        {
+            var products = await _productService.GetAllPaging(request);
+            return Ok(products);
+        }
+
         // http://localhost:port/api/product/vi-VN?LanguageId=vi-VN&PageIndex=1&Pagesize=2
         [HttpPost("all")]
         public async Task<IActionResult> GetListProductPaging(string languageId, [FromQuery] GetPublicProductPagingRequest request)
