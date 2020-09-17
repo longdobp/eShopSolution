@@ -134,9 +134,11 @@ namespace eShopSolution.Application.Catalog.Products
                 query = query.Where(x => x.pt.name.Contains(request.Keyword));
 
             if (request.CategoryIds != null && request.CategoryIds.Count > 0)
-            {
                 query = query.Where(p => request.CategoryIds.Contains(p.pic.category_id));
-            }
+
+            if (request.LanguageId != null)
+                query = query.Where(p => request.LanguageId.Contains(p.pt.languege_id));
+
             //3. Paging
             int totalRow = await query.CountAsync();
 

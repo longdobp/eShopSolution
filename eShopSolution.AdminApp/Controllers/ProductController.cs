@@ -33,6 +33,7 @@ namespace eShopSolution.AdminApp.Controllers
                 Pagesize = pageSize,
                 LanguageId = languageId
             };
+
             var data = await _productApiClient.GetProductsByPaging(request);
             ViewBag.Keyword = keyword;
             if (TempData["result"] != null)
