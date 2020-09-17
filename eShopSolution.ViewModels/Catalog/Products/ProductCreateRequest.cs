@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace eShopSolution.ViewModels.Catalog.Products
 {
@@ -11,7 +9,10 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public decimal original_price { set; get; }
         public int stock { set; get; }
         public string languege_id { set; get; }
+
+        [Required(ErrorMessage = "Bạn phải nhập tên sản phẩm")]
         public string name { set; get; }
+
         public string description { set; get; }
         public string details { set; get; }
         public string seo_description { set; get; }
