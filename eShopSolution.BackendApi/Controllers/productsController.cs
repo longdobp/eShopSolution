@@ -66,7 +66,7 @@ namespace eShopSolution.BackendApi.Controllers
             if (productId == 0)
                 return BadRequest();
 
-            var product = await _productService.GetById(productId, request.languege_id);
+            var product = await _productService.GetById(productId, request.language_id);
 
             return CreatedAtAction(nameof(GetById), new { id = productId }, product);
         }

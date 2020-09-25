@@ -42,5 +42,30 @@ namespace eShopSolution.AdminApp.Controllers
             }
             return View(data);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(request);
+            }
+
+            var result = await _productApiClient.CreateProduct(request);
+            if (result)
+            {
+                TempData["result"] = "Them moi san pham thanh cong";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Them san pham that bai");
+            return View(request);
+        }
     }
 }

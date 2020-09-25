@@ -81,7 +81,7 @@ namespace eShopSolution.Application.Catalog.Products
                         seo_description = request.seo_description,
                         seo_alias = request.seo_alias,
                         seo_title = request.seo_title,
-                        languege_id = request.languege_id
+                        languege_id = request.language_id
                     }
                 }
             };

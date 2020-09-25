@@ -8,7 +8,7 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public decimal price { set; get; }
         public decimal original_price { set; get; }
         public int stock { set; get; }
-        public string languege_id { set; get; }
+        public string language_id { set; get; }
 
         [Required(ErrorMessage = "Bạn phải nhập tên sản phẩm")]
         public string name { set; get; }

@@ -54,20 +54,20 @@ namespace eShopSolution.AdminApp.Service
                     data = br.ReadBytes((int)request.thumbnail_image.OpenReadStream().Length);
                 }
                 ByteArrayContent bytes = new ByteArrayContent(data);
-                requestContent.Add(bytes, "thumbnailImage", request.thumbnail_image.FileName);
+                requestContent.Add(bytes, "thumbnail_image", request.thumbnail_image.FileName);
             }
 
             requestContent.Add(new StringContent(request.price.ToString()), "price");
-            requestContent.Add(new StringContent(request.original_price.ToString()), "originalPrice");
+            requestContent.Add(new StringContent(request.original_price.ToString()), "original_price");
             requestContent.Add(new StringContent(request.stock.ToString()), "stock");
             requestContent.Add(new StringContent(request.name.ToString()), "name");
             requestContent.Add(new StringContent(request.description.ToString()), "description");
 
             requestContent.Add(new StringContent(request.details.ToString()), "details");
-            requestContent.Add(new StringContent(request.seo_description.ToString()), "seoDescription");
-            requestContent.Add(new StringContent(request.seo_title.ToString()), "seoTitle");
-            requestContent.Add(new StringContent(request.seo_alias.ToString()), "seoAlias");
-            requestContent.Add(new StringContent(languageId), "languageId");
+            requestContent.Add(new StringContent(request.seo_description.ToString()), "seo_description");
+            requestContent.Add(new StringContent(request.seo_title.ToString()), "seo_title");
+            requestContent.Add(new StringContent(request.seo_alias.ToString()), "seo_alias");
+            requestContent.Add(new StringContent(languageId), "language_id");
 
             var response = await client.PostAsync($"/api/products/", requestContent);
             return response.IsSuccessStatusCode;
