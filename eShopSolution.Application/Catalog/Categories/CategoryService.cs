@@ -16,17 +16,22 @@ namespace eShopSolution.Application.Catalog.Categories
             _context = context;
         }
 
-        public async Task<List<CategoryVm>> GetAll(string languageId)
+        public Task<List<CategoryVm>> GetAll(string languageId)
         {
-            var query = from c in _context.Categories
-                        join ct in _context.CategoryTransactions on c.id equals ct.category_id
-                        where ct.LanguageId == languageId
-                        select new { c, ct };
-            return await query.Select(x => new CategoryVm()
-            {
-                Id = x.c.Id,
-                Name = x.ct.Name
-            }).ToListAsync();
+            throw new NotImplementedException();
         }
+
+        //public async Task<List<CategoryVm>> GetAll(string languageId)
+        //{
+        //    var query = from c in _context.Categories
+        //                join ct in _context.CategoryTransactions on c.id equals ct.category_id
+        //                where ct.LanguageId == languageId
+        //                select new { c, ct };
+        //    return await query.Select(x => new CategoryVm()
+        //    {
+        //        Id = x.c.Id,
+        //        Name = x.ct.Name
+        //    }).ToListAsync();
+        //}
     }
 }
