@@ -17,8 +17,8 @@ namespace eShopSolution.Data.Configurations
             builder.Property(x => x.name).IsRequired().HasMaxLength(200);
             builder.Property(x => x.seo_alias).IsRequired().HasMaxLength(200);
             builder.Property(x => x.details).HasMaxLength(500);
-            builder.Property(x => x.languege_id).IsUnicode(false).IsRequired().HasMaxLength(5);
-            builder.HasOne(x => x.language).WithMany(x => x.ProductTranslations).HasForeignKey(x => x.languege_id);
+            builder.Property(x => x.language_id).IsUnicode(false).IsRequired().HasMaxLength(5);
+            builder.HasOne(x => x.language).WithMany(x => x.ProductTranslations).HasForeignKey(x => x.language_id);
             builder.HasOne(x => x.product).WithMany(x => x.ProductTranslations).HasForeignKey(x => x.product_id);
         }
     }

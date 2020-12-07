@@ -8,5 +8,6 @@ namespace eShopSolution.ViewModels.System.Languages
     {
         public string id { set; get; }
         public string name { set; get; }
+        public bool IsDefault { get; set; }
     }
 }

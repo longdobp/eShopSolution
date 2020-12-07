@@ -27,7 +27,8 @@ namespace eShopSolution.Application.System.Languages
             var languages = await _context.Languages.Select(x => new LanguageViewModel()
             {
                 id = x.id,
-                name = x.name
+                name = x.name,
+                IsDefault = x.is_default
             }).ToListAsync();
 
             return new ApiSuccessResult<List<LanguageViewModel>>(languages);

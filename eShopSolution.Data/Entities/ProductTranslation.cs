@@ -8,7 +8,7 @@ namespace eShopSolution.Data.Entities
     {
         public int id { set; get; }
         public int product_id { set; get; }
-        public string languege_id { set; get; }
+        public string language_id { set; get; }
         public string name { set; get; }
         public string description { set; get; }
         public string details { set; get; }

@@ -12,15 +12,15 @@ namespace eShopSolution.Data.Extensions
     public static class ModelBuilderExtensions
     {
         public static void Seed(this ModelBuilder modelBuilder)
-            {
-                modelBuilder.Entity<AppConfig>().HasData(
-                        new AppConfig() { key = "HomeTitle", value = "This is home page of eShopSolution" },
-                        new AppConfig() { key = "HomeKeywork", value = "This is key work of eShopSolution" },
-                        new AppConfig() { key = "HomeDescription", value = "This is Description of eShopSolution" }
-                        );
+        {
+            modelBuilder.Entity<AppConfig>().HasData(
+                    new AppConfig() { key = "HomeTitle", value = "This is home page of eShopSolution" },
+                    new AppConfig() { key = "HomeKeywork", value = "This is key work of eShopSolution" },
+                    new AppConfig() { key = "HomeDescription", value = "This is Description of eShopSolution" }
+                    );
             modelBuilder.Entity<Language>().HasData(
-            new Language() { id = "vi-VN", name = "Tiếng Việt", is_default = true },
-            new Language() { id = "en-US", name = "English", is_default = false });
+            new Language() { id = "vi", name = "Tiếng Việt", is_default = true },
+            new Language() { id = "en", name = "English", is_default = false });
 
             modelBuilder.Entity<Category>().HasData(
                 new Category()
@@ -41,10 +41,10 @@ namespace eShopSolution.Data.Extensions
                  });
 
             modelBuilder.Entity<CategoryTranslation>().HasData(
-                  new CategoryTranslation() { id = 1, category_id = 1, name = "Áo nam", language_id = "vi-VN", seo_alias = "ao-nam", seo_description = "Sản phẩm áo thời trang nam", seo_title = "Sản phẩm áo thời trang nam" },
-                  new CategoryTranslation() { id = 2, category_id = 1, name = "Men Shirt", language_id = "en-US", seo_alias = "men-shirt", seo_description = "The shirt products for men", seo_title = "The shirt products for men" },
-                  new CategoryTranslation() { id = 3, category_id = 2, name = "Áo nữ", language_id = "vi-VN", seo_alias = "ao-nu", seo_description = "Sản phẩm áo thời trang nữ", seo_title = "Sản phẩm áo thời trang women" },
-                  new CategoryTranslation() { id = 4, category_id = 2, name = "Women Shirt", language_id = "en-US", seo_alias = "women-shirt", seo_description = "The shirt products for women", seo_title = "The shirt products for women" }
+                  new CategoryTranslation() { id = 1, category_id = 1, name = "Áo nam", language_id = "vi", seo_alias = "ao-nam", seo_description = "Sản phẩm áo thời trang nam", seo_title = "Sản phẩm áo thời trang nam" },
+                  new CategoryTranslation() { id = 2, category_id = 1, name = "Men Shirt", language_id = "en", seo_alias = "men-shirt", seo_description = "The shirt products for men", seo_title = "The shirt products for men" },
+                  new CategoryTranslation() { id = 3, category_id = 2, name = "Áo nữ", language_id = "vi", seo_alias = "ao-nu", seo_description = "Sản phẩm áo thời trang nữ", seo_title = "Sản phẩm áo thời trang women" },
+                  new CategoryTranslation() { id = 4, category_id = 2, name = "Women Shirt", language_id = "en", seo_alias = "women-shirt", seo_description = "The shirt products for women", seo_title = "The shirt products for women" }
                     );
 
             modelBuilder.Entity<Product>().HasData(
@@ -63,7 +63,7 @@ namespace eShopSolution.Data.Extensions
                      id = 1,
                      product_id = 1,
                      name = "Áo sơ mi nam trắng Việt Tiến",
-                     languege_id = "vi-VN",
+                     language_id = "vi",
                      seo_alias = "ao-so-mi-nam-trang-viet-tien",
                      seo_description = "Áo sơ mi nam trắng Việt Tiến",
                      seo_title = "Áo sơ mi nam trắng Việt Tiến",
@@ -75,7 +75,7 @@ namespace eShopSolution.Data.Extensions
                         id = 2,
                         product_id = 1,
                         name = "Viet Tien Men T-Shirt",
-                        languege_id = "en-US",
+                        language_id = "en",
                         seo_alias = "viet-tien-men-t-shirt",
                         seo_description = "Viet Tien Men T-Shirt",
                         seo_title = "Viet Tien Men T-Shirt",
@@ -118,7 +118,15 @@ namespace eShopSolution.Data.Extensions
                 RoleId = roleId,
                 UserId = adminId
             });
+
+            modelBuilder.Entity<Slide>().HasData(
+              new Slide() { Id = 1, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 1, Url = "#", Image = "/themes/images/carousel/1.png", Status = Status.Active },
+              new Slide() { Id = 2, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 2, Url = "#", Image = "/themes/images/carousel/2.png", Status = Status.Active },
+              new Slide() { Id = 3, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 3, Url = "#", Image = "/themes/images/carousel/3.png", Status = Status.Active },
+              new Slide() { Id = 4, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 4, Url = "#", Image = "/themes/images/carousel/4.png", Status = Status.Active },
+              new Slide() { Id = 5, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 5, Url = "#", Image = "/themes/images/carousel/5.png", Status = Status.Active },
+              new Slide() { Id = 6, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 6, Url = "#", Image = "/themes/images/carousel/6.png", Status = Status.Active }
+              );
         }
     }
-    
 }
