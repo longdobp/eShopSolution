@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add to" xml:space="preserve">
+    <value>Add to</value>
+    <comment>/Home/Index</comment>
+  </data>
+  <data name="available products" xml:space="preserve">
+    <value>available products</value>
+    <comment>/Product/Category</comment>
+  </data>
   <data name="categoryUrl" xml:space="preserve">
     <value>categories</value>
     <comment>Layouts</comment>
@@ -131,6 +139,10 @@
   <data name="Featured Products" xml:space="preserve">
     <value>Featured Products</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+    <comment>Common</comment>
+  </data>
   <data name="Latest Products" xml:space="preserve">
     <value>Latest Products</value>
     <comment>/Home/Index</comment>
@@ -139,9 +151,37 @@
     <value>Login</value>
     <comment>Layouts</comment>
   </data>
+  <data name="More Details" xml:space="preserve">
+    <value>More Details</value>
+    <comment>Common</comment>
+  </data>
+  <data name="New | Available" xml:space="preserve">
+    <value>New | Available</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Page</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Product Details" xml:space="preserve">
+    <value>Product Details</value>
+    <comment>/Product/Detail</comment>
+  </data>
+  <data name="products" xml:space="preserve">
+    <value>products</value>
+    <comment>Common</comment>
+  </data>
   <data name="productUrl" xml:space="preserve">
     <value>products</value>
     <comment>Layouts</comment>
+  </data>
+  <data name="Related Products" xml:space="preserve">
+    <value>Related Products</value>
+    <comment>/Product/Detail</comment>
+  </data>
+  <data name="Sort By" xml:space="preserve">
+    <value>Sort By</value>
+    <comment>/Product/Category</comment>
   </data>
   <data name="Specials Offer" xml:space="preserve">
     <value>Specials Offer</value>
@@ -151,5 +191,9 @@
   </data>
   <data name="VIEW" xml:space="preserve">
     <value>VIEW</value>
+  </data>
+  <data name="View details" xml:space="preserve">
+    <value>View details</value>
+    <comment>/Product/Category</comment>
   </data>
 </root>
