@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eShopSolution.ApiIntegration;
+﻿using eShopSolution.ApiIntegration;
 using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.WebApp.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace eShopSolution.WebApp.Controllers
 {
@@ -26,8 +22,7 @@ namespace eShopSolution.WebApp.Controllers
             var product = await _productApiClient.GetById(id, culture);
             return View(new ProductDetailViewModel()
             {
-                Product = product,
-                Category = await _categoryApiClient.GetById(culture, id)
+                Product = product
             });
         }
 

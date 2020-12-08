@@ -61,13 +61,13 @@ namespace eShopSolution.ApiIntegration
             requestContent.Add(new StringContent(request.price.ToString()), "price");
             requestContent.Add(new StringContent(request.original_price.ToString()), "original_price");
             requestContent.Add(new StringContent(request.stock.ToString()), "stock");
-            requestContent.Add(new StringContent(request.name.ToString()), "name");
-            requestContent.Add(new StringContent(request.description.ToString()), "description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.name) ? "" : request.name.ToString()), "name");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.description) ? "" : request.description.ToString()), "description");
 
-            requestContent.Add(new StringContent(request.details.ToString()), "details");
-            requestContent.Add(new StringContent(request.seo_description.ToString()), "seo_description");
-            requestContent.Add(new StringContent(request.seo_title.ToString()), "seo_title");
-            requestContent.Add(new StringContent(request.seo_alias.ToString()), "seo_alias");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.details) ? "" : request.details.ToString()), "details");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.seo_description) ? "" : request.seo_description.ToString()), "seo_description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.seo_title) ? "" : request.seo_title.ToString()), "seo_title");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.seo_alias) ? "" : request.seo_alias.ToString()), "seo_alias");
             requestContent.Add(new StringContent(languageId), "language_id");
 
             var response = await client.PostAsync($"/api/products/", requestContent);
@@ -148,16 +148,21 @@ namespace eShopSolution.ApiIntegration
                 requestContent.Add(bytes, "thumbnail_image", request.thumbnail_image.FileName);
             }
 
-            requestContent.Add(new StringContent(request.name.ToString()), "name");
-            requestContent.Add(new StringContent(request.description.ToString()), "description");
-            requestContent.Add(new StringContent(request.details.ToString()), "details");
-            requestContent.Add(new StringContent(request.seo_description.ToString()), "seo_description");
-            requestContent.Add(new StringContent(request.seo_title.ToString()), "seo_title");
-            requestContent.Add(new StringContent(request.seo_alias.ToString()), "seo_alias");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.name) ? "" : request.name.ToString()), "name");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.description) ? "" : request.description.ToString()), "description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.details) ? "" : request.details.ToString()), "details");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.seo_description) ? "" : request.seo_description.ToString()), "seo_description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.seo_title) ? "" : request.seo_title.ToString()), "seo_title");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.seo_alias) ? "" : request.seo_alias.ToString()), "seo_alias");
             requestContent.Add(new StringContent(languageId), "language_id");
 
             var response = await client.PutAsync($"/api/products/" + request.id, requestContent);
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DeleteProduct(int id)
+        {
+            return await Delete($"/api/products/" + id);
         }
     }
 }
