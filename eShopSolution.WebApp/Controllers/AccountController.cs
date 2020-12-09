@@ -80,11 +80,55 @@ namespace eShopSolution.WebApp.Controllers
             validationParameters.ValidateLifetime = true;
             validationParameters.ValidAudience = _configuration["Tokens:Issuer"];
             validationParameters.ValidIssuer = _configuration["Tokens:Issuer"];
-            validationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+            validationParameters.IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
 
-            ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(jwtToken, validationParameters, out validationToken);
+            ClaimsPrincipal principal = new JwtSecurityTokenHandler()
+                .ValidateToken(jwtToken, validationParameters, out validationToken);
 
             return principal;
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _userApiClient.RegisterUser(request);
+            if (!result.IsSuccessed)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View();
+            }
+
+            var loginResult = await _userApiClient.Authenticate(new LoginRequest()
+            { 
+                UserName = request.UserName,
+                Password = request.Password,
+                RememberMe = true
+            });
+
+            var userPrincipal = this.ValidationToken(loginResult.ResultObj);
+            var authProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+                IsPersistent = false
+            };
+
+            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, loginResult.ResultObj);
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                userPrincipal,
+                authProperties);
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
